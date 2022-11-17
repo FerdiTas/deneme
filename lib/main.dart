@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:search_app/app_UI/search_page.dart';
+import 'package:search_app/services/pokedex_api.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PokeApi.getPokemonData();
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

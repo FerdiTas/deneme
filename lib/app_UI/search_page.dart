@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:search_app/widgets/user_widget.dart';
+import 'package:search_app/widgets/pokemon_list.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -78,7 +78,8 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             ),
-            Expanded(child: userWidget()),
+            PokemonList(),
+            //Expanded(child: userWidget()),
           ],
         ),
       ),
