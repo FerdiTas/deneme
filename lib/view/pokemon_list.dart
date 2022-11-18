@@ -12,31 +12,12 @@ class NinjaList extends StatefulWidget {
 
 class _NinjaListState extends State<NinjaList> {
   // late String searchString;
-  late Future<List<NinjaModel>> _ninjaList;
   late TextEditingController textEditingController;
 
   @override
   void initState() {
-    _ninjaList = NinjaApi.getNinjaData();
     textEditingController = TextEditingController();
-
-    print(_ninjaList.toString());
-    // searchString = "";
     super.initState();
-  }
-
-  _setSearchString({String value = ""}) {
-    setState(() {
-      // searchString = value;
-      if (value!.isNotEmpty) {
-        var searchResult = (_ninjaList as List)
-            .where((element) =>
-                element.name!.toLowerCase().contains(value?.toLowerCase()))
-            .toList();
-        _ninjaList = searchResult as Future<List<NinjaModel>>;
-        debugPrint(searchResult.toString());
-      }
-    });
   }
 
   @override
@@ -58,13 +39,20 @@ class _NinjaListState extends State<NinjaList> {
         physics: const AlwaysScrollableScrollPhysics(), // new
         children: [
           FutureBuilder<List<NinjaModel>>(
-            future: _ninjaList,
+            future: NinjaApi.getNinjaData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<NinjaModel> _listem = snapshot.data!;
-                return Expanded(
-                  child: buildListView(_listem),
-                );
+                List<NinjaModel> _listem = snapshot.data as List<NinjaModel>;
+
+                if (textEditingController.text.isNotEmpty) {
+                  List<NinjaModel> searchResult = (_listem as List<NinjaModel>)
+                      .where((element) => element.name!
+                          .toLowerCase()
+                          .contains(textEditingController.text.toLowerCase()))
+                      .toList();
+                  _listem = searchResult;
+                }
+                return buildListView(_listem);
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("hata cıktı"),
@@ -108,11 +96,15 @@ class _NinjaListState extends State<NinjaList> {
       padding: const EdgeInsets.only(left: 10, top: 22),
       child: TextFormField(
         controller: textEditingController,
-        onChanged: (value) => _setSearchString(value: value),
+        onChanged: (value) {
+          setState(() {});
+        },
         decoration: InputDecoration(
           suffixIcon: IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              setState(() {});
+            },
           ),
           hintText: "search",
           contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
