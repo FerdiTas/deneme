@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:search_app/widgets/pokemon_list.dart';
+
+import 'pokemon_list.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final void Function(String)? onChanged;
+  SearchPage({super.key, this.onChanged});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  //String? secilen_harf = "A";
+  late TextEditingController textEditingController;
+  @override
+  void initState() {
+    textEditingController = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -27,8 +35,9 @@ class _SearchPageState extends State<SearchPage> {
                   width: 310,
                   height: 100,
                   padding: const EdgeInsets.only(left: 10, top: 22),
-                  child: const TextField(
-                    //onChanged: (text) => search(text),
+                  child: TextField(
+                    controller: textEditingController,
+                    onChanged: widget.onChanged,
                     decoration: InputDecoration(
                       suffixIcon: Icon(Icons.search),
                       hintText: "serach",
@@ -78,7 +87,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             ),
-            PokemonList(),
+            NinjaList(),
             //Expanded(child: userWidget()),
           ],
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:search_app/app_UI/search_page.dart';
-import 'package:search_app/services/pokedex_api.dart';
+import 'package:search_app/view/pokemon_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,14 +10,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PokeApi.getPokemonData();
+    // PokeApi.getPokemonData();
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SearchPage(),
+      home: NinjaList(),
     );
   }
 }
